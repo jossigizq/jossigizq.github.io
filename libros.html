@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca · José María Sigüenza Izquierdo</title>
+  <meta name="description"
+    content="Recopilación de libros que he leído: lecturas, autores y notas personales.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#17181B">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #FBFAF7;
+      --surface: #FFFFFF;
+      --ink: #17181B;
+      --text: #4A4D54;
+      --muted: #9A9EA6;
+      --line: #ECE8DF;
+      --accent: #B08D57;
+      --accent-ink: #8A6D3F;
+      --radius: 16px;
+      --shadow: 0 1px 2px rgba(23, 24, 27, .04), 0 18px 50px rgba(23, 24, 27, .07);
+      --maxw: 960px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background-image: radial-gradient(var(--line) 1px, transparent 1px);
+      background-size: 26px 26px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- Top bar ---------- */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 0;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .94rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: color .18s ease, transform .18s ease;
+    }
+
+    .back:hover {
+      color: var(--ink);
+      transform: translateX(-2px);
+    }
+
+    .back svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .brand {
+      font-family: 'Fraunces', serif;
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    /* ---------- Header ---------- */
+    .head {
+      text-align: center;
+      padding: 28px 0 8px;
+      animation: rise .7s cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+    }
+
+    .eyebrow {
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-ink);
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(2.1rem, 5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -.01em;
+      color: var(--ink);
+    }
+
+    .divider {
+      width: 42px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--accent);
+      margin: 20px auto;
+    }
+
+    .subtitle {
+      font-size: 1.02rem;
+      color: var(--text);
+      max-width: 48ch;
+      margin: 0 auto;
+    }
+
+    .count {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---------- Books grid ---------- */
+    .books {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px 0 24px;
+    }
+
+    .book {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 24px 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .book:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 1px 2px rgba(23, 24, 27, .05), 0 24px 60px rgba(23, 24, 27, .10);
+    }
+
+    .book .genre {
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent-ink);
+      margin-bottom: 12px;
+    }
+
+    .book h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
+      font-size: 1.28rem;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .book .author {
+      font-size: .92rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .book .note {
+      font-size: .96rem;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .book .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .rating {
+      display: inline-flex;
+      gap: 3px;
+      color: var(--accent);
+    }
+
+    .rating svg {
+      width: 15px;
+      height: 15px;
+    }
+
+    .rating .empty {
+      color: var(--line);
+    }
+
+    .year {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      text-align: center;
+      padding: 24px 0 40px;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .head {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrap">
+
+    <!-- ============ TOP BAR ============ -->
+    <div class="topbar">
+      <a href="index.html" class="back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5" />
+          <path d="m12 19-7-7 7-7" />
+        </svg>
+        Volver
+      </a>
+      <a href="index.html" class="brand">JS<span>.</span></a>
+    </div>
+
+    <!-- ============ HEADER ============ -->
+    <header class="head">
+      <p class="eyebrow">Lecturas</p>
+      <h1>Biblioteca</h1>
+      <div class="divider"></div>
+      <p class="subtitle">
+        Una recopilación de los libros que he leído, con alguna nota personal sobre cada uno.
+      </p>
+      <span class="count">8 libros</span>
+    </header>
+
+    <!-- ============ BOOKS ============ -->
+    <!--
+      Para añadir un libro, copia un bloque <article class="book"> ... </article>
+      y edita: género, título, autor, nota, valoración (estrellas) y año.
+      La valoración usa la clase "empty" en las estrellas no rellenas.
+    -->
+    <main class="books">
+
+      <article class="book">
+        <p class="genre">Ciencia ficción</p>
+        <h3>Dune</h3>
+        <p class="author">Frank Herbert</p>
+        <p class="note">Una obra monumental sobre poder, ecología y religión. Densa pero
+          absorbente; el universo que construye es difícil de olvidar.</p>
+        <div class="foot">
+          <span class="rating" aria-label="5 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2023</span>
+        </div>
+      </article>
+
+      <article class="book">
+        <p class="genre">Divulgación</p>
+        <h3>Sapiens</h3>
+        <p class="author">Yuval Noah Harari</p>
+        <p class="note">Un recorrido provocador por la historia de la humanidad. Algunas tesis
+          son discutibles, pero invita a pensar en grande.</p>
+        <div class="foot">
+          <span class="rating" aria-label="4 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2023</span>
+        </div>
+      </article>
+
+      <article class="book">
+        <p class="genre">Técnico</p>
+        <h3>Clean Code</h3>
+        <p class="author">Robert C. Martin</p>
+        <p class="note">Principios para escribir código legible y mantenible. Dogmático en
+          partes, pero con consejos que se quedan contigo.</p>
+        <div class="foot">
+          <span class="rating" aria-label="4 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2024</span>
+        </div>
+      </article>
+
+      <article class="book">
+        <p class="genre">Novela</p>
+        <h3>1984</h3>
+        <p class="author">George Orwell</p>
+        <p class="note">Un clásico que sigue siendo incómodamente actual. La distopía
+          definitiva sobre vigilancia y control.</p>
+        <div class="foot">
+          <span class="rating" aria-label="5 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2022</span>
+        </div>
+      </article>
+
+      <article class="book">
+        <p class="genre">Técnico</p>
+        <h3>Digital Design and Computer Architecture</h3>
+        <p class="author">Harris &amp; Harris</p>
+        <p class="note">La referencia que me acompañó en el diseño digital: de las puertas
+          lógicas al procesador completo, con muchísima claridad.</p>
+        <div class="foot">
+          <span class="rating" aria-label="5 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2024</span>
+        </div>
+      </article>
+
+      <article class="book">
+        <p class="genre">Novela</p>
+        <h3>El nombre del viento</h3>
+        <p class="author">Patrick Rothfuss</p>
+        <p class="note">Fantasía con una prosa preciosa y un narrador inolvidable. La espera
+          por el tercer libro se hace eterna.</p>
+        <div class="foot">
+          <span class="rating" aria-label="4 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2023</span>
+        </div>
+      </article>
+
+      <article class="book">
+        <p class="genre">Divulgación</p>
+        <h3>El gen egoísta</h3>
+        <p class="author">Richard Dawkins</p>
+        <p class="note">Cambia tu forma de ver la evolución. Una explicación brillante del
+          papel del gen como unidad de selección.</p>
+        <div class="foot">
+          <span class="rating" aria-label="4 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2022</span>
+        </div>
+      </article>
+
+      <article class="book">
+        <p class="genre">Novela</p>
+        <h3>Fahrenheit 451</h3>
+        <p class="author">Ray Bradbury</p>
+        <p class="note">Breve y potente. Una advertencia sobre la censura y la pérdida del
+          pensamiento crítico que envejece muy bien.</p>
+        <div class="foot">
+          <span class="rating" aria-label="4 de 5">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg class="empty" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </span>
+          <span class="year">2021</span>
+        </div>
+      </article>
+
+    </main>
+
+    <footer>© 2026 · jossigizq</footer>
+
+  </div>
+
+</body>
+
+</html>
