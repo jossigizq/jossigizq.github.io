@@ -8,7 +8,7 @@ Sitio web personal de **José María Sigüenza Izquierdo** (Ingeniero de Computa
 
 - **`index.html`** — Portada. Tarjeta de presentación con avatar, rol, descarga del CV y enlaces (GitHub, LinkedIn, email y biblioteca).
 - **`libros.html`** — Biblioteca. Mosaico de los libros leídos, con género, autor, valoración y notas. Incluye colecciones (sagas y bibliotecas editoriales) y **baraja las tarjetas en cada carga** manteniendo una composición asimétrica.
-- Maquetas alternativas: `portfolio.html`, `landing.html`, `index_linktree.html` (variantes de diseño).
+- **`portfolio.html`** — Maqueta alternativa: portafolio de una página, con barra de navegación y secciones (sobre mí, trayectoria, skills, contacto).
 
 ## Características
 
@@ -26,17 +26,16 @@ python -m http.server 8090
 # y abrir http://127.0.0.1:8090/index.html
 ```
 
-> El repositorio incluye `.claude/launch.json` con esta configuración de servidor local.
-
 ## Estructura del repositorio
 
 | Recurso | Descripción |
 | --- | --- |
-| `index.html`, `libros.html`, `portfolio.html`, `landing.html`, `index_linktree.html` | Páginas del sitio |
-| `index_style.css` | Estilos de la versión *linktree* |
-| `avatar-*.svg`, `avatar.jpg` | Variantes de avatar |
-| `favicon.*`, `apple-touch-icon.png`, `icon-*.png`, `site.webmanifest` | Iconos y manifiesto web |
-| `cv_jossigizq.pdf` | CV descargable |
+| `index.html`, `libros.html`, `portfolio.html` | Páginas del sitio (en la raíz) |
+| `favicon.ico`, `apple-touch-icon.png`, `site.webmanifest` | Iconos/manifiesto que deben permanecer en la raíz |
+| `assets/css/` | Hojas de estilo — `index_style.css` |
+| `assets/img/` | Imágenes y avatares — `avatar-*.svg`, `avatar.jpg`, `img1.avif` |
+| `assets/icons/` | Favicon SVG e iconos de la app — `favicon.svg`, `icon-192.png`, `icon-512.png` |
+| `assets/docs/` | Documentos — `cv_jossigizq.pdf` |
 
 ## Despliegue
 
