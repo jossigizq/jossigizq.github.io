@@ -11,7 +11,20 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#17181B">
+  <meta name="theme-color" content="#16171B">
+
+  <script>
+    // Fija el tema (oscuro/claro) antes de pintar, para que no haya parpadeo. Por defecto, oscuro.
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        // Por defecto, oscuro: solo marcamos 'light' si el usuario lo eligió.
+        if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', saved === 'light' ? '#FBFAF7' : '#16171B');
+      } catch (e) {}
+    })();
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +33,22 @@
     rel="stylesheet">
 
   <style>
+    /* El modo oscuro es el de por defecto (también sin JS). */
     :root {
+      --bg: #16171B;
+      --surface: #1F2127;
+      --ink: #F2EFE8;
+      --text: #C2C5CC;
+      --muted: #868B95;
+      --line: #2C2F37;
+      --accent: #C8A26C;
+      --accent-ink: #D8B888;
+      --on-ink: #16171B;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 18px 50px rgba(0, 0, 0, .5);
+    }
+
+    /* Modo claro: opcional, se activa con data-theme="light". */
+    [data-theme="light"] {
       --bg: #FBFAF7;
       --surface: #FFFFFF;
       --ink: #17181B;
@@ -29,6 +57,7 @@
       --line: #ECE8DF;
       --accent: #B08D57;
       --accent-ink: #8A6D3F;
+      --on-ink: #fff;
       --shadow: 0 1px 2px rgba(23, 24, 27, .04), 0 18px 50px rgba(23, 24, 27, .07);
     }
 
@@ -52,6 +81,7 @@
       /* Textura sutil de puntos */
       background-image: radial-gradient(var(--line) 1px, transparent 1px);
       background-size: 26px 26px;
+      transition: background-color .3s ease, color .3s ease;
     }
 
     .card {
@@ -64,6 +94,7 @@
       text-align: center;
       box-shadow: var(--shadow);
       animation: rise .7s cubic-bezier(.2, .7, .2, 1) both;
+      transition: background-color .3s ease, border-color .3s ease;
     }
 
     @keyframes rise {
@@ -142,7 +173,7 @@
       margin: 30px 0 8px;
       padding: 13px 28px;
       background: var(--ink);
-      color: #fff;
+      color: var(--on-ink);
       border-radius: 999px;
       font-size: .96rem;
       font-weight: 600;
@@ -185,7 +216,7 @@
     .social:hover {
       transform: translateY(-3px);
       background: var(--ink);
-      color: #fff;
+      color: var(--on-ink);
       border-color: var(--ink);
     }
 
@@ -193,6 +224,40 @@
       width: 20px;
       height: 20px;
     }
+
+    /* Botón de modo oscuro/claro, fijo en la esquina superior derecha. */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, background-color .3s ease, color .3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      border-color: var(--ink);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .theme-toggle .icon-moon { display: none; }
+    [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+    [data-theme="light"] .theme-toggle .icon-moon { display: inline-flex; }
 
     footer {
       margin-top: 26px;
@@ -209,6 +274,11 @@
 </head>
 
 <body>
+
+  <button class="theme-toggle" type="button" aria-label="Cambiar a modo claro" aria-pressed="true">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  </button>
 
   <main class="card">
     <img class="avatar" src="avatar-monogram.svg" alt="Retrato de José María Sigüenza Izquierdo">
@@ -273,6 +343,33 @@
 
     <footer>© 2026 · jossigizq</footer>
   </main>
+
+  <script>
+    // Botón de modo oscuro/claro: alterna el tema, lo recuerda y avisa a lectores de pantalla.
+    (function () {
+      var btn = document.querySelector('.theme-toggle');
+      if (!btn) return;
+      var root = document.documentElement;
+      var meta = document.querySelector('meta[name="theme-color"]');
+
+      function apply(dark) {
+        if (dark) root.removeAttribute('data-theme');
+        else root.setAttribute('data-theme', 'light');
+        btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+        btn.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+        if (meta) meta.setAttribute('content', dark ? '#16171B' : '#FBFAF7');
+      }
+
+      // El tema inicial ya lo fijó el script de la cabecera; aquí solo sincronizo el botón.
+      apply(root.getAttribute('data-theme') !== 'light');
+
+      btn.addEventListener('click', function () {
+        var dark = root.getAttribute('data-theme') === 'light';
+        apply(dark);
+        try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      });
+    })();
+  </script>
 
 </body>
 
