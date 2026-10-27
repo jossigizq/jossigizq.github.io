@@ -78,7 +78,7 @@
       padding: 28px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      /* Textura sutil de puntos */
+      /* Textura sutil de puntos (las trazas animadas van por encima, en canvas) */
       background-image: radial-gradient(var(--line) 1px, transparent 1px);
       background-size: 26px 26px;
       transition: background-color .3s ease, color .3s ease;
@@ -289,13 +289,13 @@
     <div class="divider"></div>
 
     <div class="roles">
-      <span class="role">Ingeniero de infraestructuras</span>
-      <span class="role">Soporte TI</span>
+      <span class="role">Diseño digital FPGA/ASIC</span>
+      <span class="role">Verificación UVM</span>
     </div>
 
     <p class="bio">
-      Con un ojo en el diseño y verificación de circuitos digitales. Y otro en las
-      redes de computadores.
+      Diseño de circuitos digitales con implementaciones en FPGA y ASIC.
+      Verificación y Validación basada en la Metodología de Verificación Universal (UVM).
     </p>
 
     <a class="cv" href="assets/docs/cv_jossigizq.pdf" target="_blank" rel="noopener">
@@ -339,10 +339,22 @@
           <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
         </svg>
       </a>
+      <a class="social" href="galeria.html" aria-label="Galería de ASIC"
+        title="Galería de ASIC">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="2.5" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <path d="m21 15-5-5L5 21" />
+        </svg>
+      </a>
     </nav>
 
     <footer>© 2026 · jossigizq</footer>
   </main>
+
+  <!-- Trazas de enrutado animadas sobre la cuadrícula del fondo. -->
+  <script src="assets/js/grid-routes.js" defer></script>
 
   <script>
     // Botón de modo oscuro/claro: alterna el tema, lo recuerda y avisa a lectores de pantalla.
